@@ -90,9 +90,9 @@ function drawBoard() {
     });
 
     if (gameState.winner === "Tie") {
-        statusElement.textContent = "Tie!";
+        statusElement.textContent = "Tie ;(";
     } else if (gameState.winner) {
-        //find the username of the winner (use the letter if no name)
+        //find the username of the winner (use the letter if there's no username)
         let winnerName = gameState.winner === "X" ? gameState.xName : gameState.oName;
         if (!winnerName) {
             winnerName = gameState.winner;
