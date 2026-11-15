@@ -19,7 +19,9 @@ const GAME_PASSWORD = "Pineapple";
 let gameState = {
     board: Array(9).fill(""),
     currentPlayer: "X",
-    winner: null
+    winner: null,   //"X", "O", "Tie", or null
+    xName: "",      //username of player X
+    oName: ""       //username of player O
 };
 
 //track the 2 players 
@@ -99,9 +101,11 @@ wss.on("connection", ws => {
             if (!players.X) {
                 players.X = ws;
                 ws.role = "X";
+                gameState.xName = ws.playerName;
             } else if (!players.O) {
                 players.O = ws;
                 ws.role = "O";
+                gameState.oName = ws.playerName;
             } else {
                 ws.role = "spectator";
             }
@@ -112,6 +116,9 @@ wss.on("connection", ws => {
             ws.send(
                 JSON.stringify({ type: "role", role: ws.role, name: ws.playerName })
             );
+
+            //let everyone know the player names
+            broadcastState();
             return;
         }
 
@@ -153,6 +160,9 @@ wss.on("connection", ws => {
 
             if (winner) {
                 gameState.winner = winner;
+            } else if (!gameState.board.includes("")) {
+                //board is full and nobody won
+                gameState.winner = "Tie";
             } else {
                 gameState.currentPlayer = gameState.currentPlayer === "X" ? "O" : "X";
             }
@@ -162,11 +172,10 @@ wss.on("connection", ws => {
 
         //reset
         if (data.type === "reset") {
-            gameState = {
-                board: Array(9).fill(""),
-                currentPlayer: "X",
-                winner: null
-            };
+            //clear the board but keep the player names
+            gameState.board = Array(9).fill("");
+            gameState.currentPlayer = "X";
+            gameState.winner = null;
 
             broadcastState();
         }
@@ -176,10 +185,13 @@ wss.on("connection", ws => {
     ws.on("close", () => {
         if (players.X === ws) {
             players.X = null;
+            gameState.xName = "";
         }
         if (players.O === ws) {
             players.O = null;
+            gameState.oName = "";
         }
+        broadcastState();
     });
 
 });
