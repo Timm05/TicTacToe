@@ -2,7 +2,7 @@
 Introduction to Web Development - Lab 4
 
 ## Play the game
-Link: https://YOUR-APP-NAME.onrender.com
+Link: https://twoplayertictactoe-timmy.onrender.com
 
 Game password: Pineapple
 
