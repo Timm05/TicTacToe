@@ -89,8 +89,15 @@ function drawBoard() {
         }
     });
 
-    if (gameState.winner) {
-        statusElement.textContent = `Winner: ${gameState.winner}`;
+    if (gameState.winner === "Tie") {
+        statusElement.textContent = "Tie!";
+    } else if (gameState.winner) {
+        //find the username of the winner (use the letter if no name)
+        let winnerName = gameState.winner === "X" ? gameState.xName : gameState.oName;
+        if (!winnerName) {
+            winnerName = gameState.winner;
+        }
+        statusElement.textContent = `${winnerName} (${gameState.winner}) wins!`;
     } else {
         statusElement.textContent = `Turn: ${gameState.currentPlayer}`;
     }
