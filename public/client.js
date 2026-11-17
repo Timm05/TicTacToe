@@ -1,6 +1,6 @@
 // Name: Timmy Nguyen
 // Introduction to Web Development
-// Project 4: Multiplayer Tic-Tac-Toe
+// Lab 4: Multiplayer Tic-Tac-Toe
 
 //dom elements
 const boardCanvas = document.getElementById("board");
