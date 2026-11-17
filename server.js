@@ -1,6 +1,6 @@
 //Timmy Nguyen
 //Introduction to Web Development
-//Project 4: Multiplayer Tic-Tac-Toe 
+//Lab 4: Multiplayer Tic-Tac-Toe 
 
 // SERVER SETUP
 const express = require("express");          
